@@ -88,7 +88,18 @@ void Vaccumulator::eval_step() {
     vlSymsp->__Vm_activity = true;
     do {
         VL_DEBUG_IF(VL_DBG_MSGF("+ Clock loop\n"););
+        pthread_t thread;
+        // Create a new thread that executes the function `predict()`
+        // Takes the current state as an argument. Predicts new state based on current state and inputs
+        // Calls Vaccumulator___024root___eval by passing the predicted state
+        // Returns predicted state and the state as a result of the prediction
+        pthread_create (&thread, NULL, &predict, &(vlSymsp->TOP));
+        // Wait for the created thread to terminate
         Vaccumulator___024root___eval(&(vlSymsp->TOP));
+        pthread_join (thread, NULL);
+        // Compare actual state and predicted state
+        // If they are the same, skip the computation of the next state by the main thread
+        // Skip ahead to the state that is the result of the prediction
     } while (0);
     // Evaluate cleanup
 }
