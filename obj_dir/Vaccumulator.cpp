@@ -4,6 +4,8 @@
 #include "Vaccumulator.h"
 #include "Vaccumulator__Syms.h"
 #include "verilated_vcd_c.h"
+#include <iostream>
+#include <pthread.h>
 
 //============================================================
 // Constructors
