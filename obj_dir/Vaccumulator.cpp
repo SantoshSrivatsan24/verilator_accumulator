@@ -40,7 +40,7 @@ Vaccumulator::~Vaccumulator() {
 
 void Vaccumulator___024root___eval_initial(Vaccumulator___024root* vlSelf);
 void Vaccumulator___024root___eval_settle(Vaccumulator___024root* vlSelf);
-void Vaccumulator___024root___eval(Vaccumulator___024root* vlSelf);
+void Vaccumulator___024root___eval(Vaccumulator___024root* vlSelf, Vaccumulator___024root* vlNext);
 #ifdef VL_DEBUG
 void Vaccumulator___024root___eval_debug_assertions(Vaccumulator___024root* vlSelf);
 #endif  // VL_DEBUG
@@ -54,29 +54,9 @@ static void _eval_initial_loop(Vaccumulator__Syms* __restrict vlSymsp) {
     do {
         VL_DEBUG_IF(VL_DBG_MSGF("+ Initial loop\n"););
         Vaccumulator___024root___eval_settle(&(vlSymsp->TOP));
-        Vaccumulator___024root___eval(&(vlSymsp->TOP));
+        Vaccumulator___024root___eval(&(vlSymsp->TOP), &(vlSymsp->NEXT));
     } while (0);
 }
-
-// Returns predicted state
-static void *predict(void *args) {
-
-    Vaccumulator___024root *CURRENT_STATE = (Vaccumulator___024root *) args;
-
-    std::cout<<"CURRENT STATE: in = "<<(int) CURRENT_STATE->in<<" dff = "<<(int) CURRENT_STATE->accumulator__DOT__dff<<" out = "<<(int) CURRENT_STATE->out<<'\n';
-
-    // Copy current state to another state so it can be modified without affecting the original state
-    Vaccumulator___024root *NEXT_STATE = new Vaccumulator___024root (CURRENT_STATE);
-
-    // Right now the next state is a copy of the current state
-    // TODO: Modify the next state here
-    NEXT_STATE->accumulator__DOT__dff += 1;
-
-    std::cout<<"NEXT STATE: in = "<<(int) NEXT_STATE->in<<" dff = "<<(int) NEXT_STATE->accumulator__DOT__dff<<" out = "<<(int) NEXT_STATE->out<<'\n';
-
-    pthread_exit (NULL);
-}
-
 
 void Vaccumulator::eval_step() {
     VL_DEBUG_IF(VL_DBG_MSGF("+++++TOP Evaluate Vaccumulator::eval_step\n"); );
@@ -90,18 +70,7 @@ void Vaccumulator::eval_step() {
     vlSymsp->__Vm_activity = true;
     do {
         VL_DEBUG_IF(VL_DBG_MSGF("+ Clock loop\n"););
-        pthread_t thread;
-        // Create a new thread that executes the function `predict()`
-        // Takes the current state as an argument. Predicts new state based on current state and inputs
-        // Calls Vaccumulator___024root___eval by passing the predicted state
-        // Returns predicted state and the state as a result of the prediction
-        pthread_create (&thread, NULL, &predict, &(vlSymsp->TOP));
-        // Wait for the created thread to terminate
-        Vaccumulator___024root___eval(&(vlSymsp->TOP));
-        pthread_join (thread, NULL);
-        // Compare actual state and predicted state
-        // If they are the same, skip the computation of the next state by the main thread
-        // Skip ahead to the state that is the result of the prediction
+        Vaccumulator___024root___eval(&(vlSymsp->TOP), &(vlSymsp->NEXT));
     } while (0);
     // Evaluate cleanup
 }

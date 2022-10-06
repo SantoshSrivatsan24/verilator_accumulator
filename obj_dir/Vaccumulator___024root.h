@@ -25,7 +25,6 @@ class Vaccumulator___024root final : public VerilatedModule {
 
     // CONSTRUCTORS
     Vaccumulator___024root(Vaccumulator__Syms* symsp, const char* name);
-     Vaccumulator___024root(Vaccumulator___024root *rootp);
     ~Vaccumulator___024root();
     VL_UNCOPYABLE(Vaccumulator___024root);
 
