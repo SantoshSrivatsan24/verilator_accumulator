@@ -56,6 +56,25 @@ static void _eval_initial_loop(Vaccumulator__Syms* __restrict vlSymsp) {
     } while (0);
 }
 
+// Returns predicted state
+static void *predict(void *args) {
+
+    Vaccumulator___024root *CURRENT_STATE = (Vaccumulator___024root *) args;
+
+    std::cout<<"CURRENT STATE: in = "<<(int) CURRENT_STATE->in<<" dff = "<<(int) CURRENT_STATE->accumulator__DOT__dff<<" out = "<<(int) CURRENT_STATE->out<<'\n';
+
+    // Copy current state to another state so it can be modified without affecting the original state
+    Vaccumulator___024root *NEXT_STATE = new Vaccumulator___024root (CURRENT_STATE);
+
+    // Right now the next state is a copy of the current state
+    // TODO: Modify the next state here
+    NEXT_STATE->accumulator__DOT__dff += 1;
+
+    std::cout<<"NEXT STATE: in = "<<(int) NEXT_STATE->in<<" dff = "<<(int) NEXT_STATE->accumulator__DOT__dff<<" out = "<<(int) NEXT_STATE->out<<'\n';
+
+    pthread_exit (NULL);
+}
+
 
 void Vaccumulator::eval_step() {
     VL_DEBUG_IF(VL_DBG_MSGF("+++++TOP Evaluate Vaccumulator::eval_step\n"); );
