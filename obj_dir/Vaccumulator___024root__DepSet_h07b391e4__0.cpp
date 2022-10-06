@@ -73,8 +73,8 @@ void Vaccumulator___024root___eval(Vaccumulator___024root* vlSelf, Vaccumulator_
     if (((IData)(vlSelf->clk) & (~ (IData)(vlSelf->__Vclklast__TOP__clk)))) {
         // Run Vaccumulator___024root___sequent__TOP__0 on another thread with vlNext as an argument
         pthread_t thread;
-        Vaccumulator___024root___sequent__TOP__0(vlSelf);
         pthread_create (&thread, NULL, &Vaccumulator___024root__sequent__NEXT__0, vlNext);
+        Vaccumulator___024root___sequent__TOP__0(vlSelf);
         pthread_join (thread, NULL);
     }
     // Final
