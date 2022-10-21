@@ -17,6 +17,7 @@ Vaccumulator__Syms::Vaccumulator__Syms(VerilatedContext* contextp, const char* n
     // Setup module instances
     , TOP{this, namep}
     , NEXT{this, namep}
+    , PRDCT{this, namep}
 {
     // Configure time unit / time precision
     _vm_contextp__->timeunit(-12);

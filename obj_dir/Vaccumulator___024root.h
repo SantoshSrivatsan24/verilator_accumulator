@@ -26,10 +26,18 @@ class Vaccumulator___024root final : public VerilatedModule {
     // CONSTRUCTORS
     Vaccumulator___024root(Vaccumulator__Syms* symsp, const char* name);
     ~Vaccumulator___024root();
-    VL_UNCOPYABLE(Vaccumulator___024root);
+
+    // Comment out since we want to be able to copy state
+    // VL_UNCOPYABLE(Vaccumulator___024root);
 
     // INTERNAL METHODS
     void __Vconfigure(bool first);
+
+    // OPERATOR OVERLOADING
+    Vaccumulator___024root& operator= (const Vaccumulator___024root& rhs);
+    friend inline bool operator== (const Vaccumulator___024root& lhs, const Vaccumulator___024root& rhs);
+
+
 } VL_ATTR_ALIGNED(VL_CACHE_LINE_BYTES);
 
 

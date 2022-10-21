@@ -40,7 +40,7 @@ Vaccumulator::~Vaccumulator() {
 
 void Vaccumulator___024root___eval_initial(Vaccumulator___024root* vlSelf);
 void Vaccumulator___024root___eval_settle(Vaccumulator___024root* vlSelf);
-void Vaccumulator___024root___eval(Vaccumulator___024root* vlSelf, Vaccumulator___024root* vlNext);
+void Vaccumulator___024root___eval(Vaccumulator___024root* vlSelf, Vaccumulator___024root* vlNext, Vaccumulator___024root* vlPredict);
 #ifdef VL_DEBUG
 void Vaccumulator___024root___eval_debug_assertions(Vaccumulator___024root* vlSelf);
 #endif  // VL_DEBUG
@@ -54,7 +54,7 @@ static void _eval_initial_loop(Vaccumulator__Syms* __restrict vlSymsp) {
     do {
         VL_DEBUG_IF(VL_DBG_MSGF("+ Initial loop\n"););
         Vaccumulator___024root___eval_settle(&(vlSymsp->TOP));
-        Vaccumulator___024root___eval(&(vlSymsp->TOP), &(vlSymsp->NEXT));
+        Vaccumulator___024root___eval(&(vlSymsp->TOP), &(vlSymsp->NEXT), &(vlSymsp->PRDCT));
     } while (0);
 }
 
@@ -70,7 +70,7 @@ void Vaccumulator::eval_step() {
     vlSymsp->__Vm_activity = true;
     do {
         VL_DEBUG_IF(VL_DBG_MSGF("+ Clock loop\n"););
-        Vaccumulator___024root___eval(&(vlSymsp->TOP), &(vlSymsp->NEXT));
+        Vaccumulator___024root___eval(&(vlSymsp->TOP), &(vlSymsp->NEXT), &(vlSymsp->PRDCT));
     } while (0);
     // Evaluate cleanup
 }

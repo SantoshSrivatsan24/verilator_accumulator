@@ -1,7 +1,7 @@
 ################################################
 # Configurations for building accumulator
 
-OBJ_DIR = ./obj_dir
+OBJ_DIR = ./obj_dir2
 GRAPH_DIR = ./graphs
 
 TOP = accumulator
@@ -44,7 +44,7 @@ gen: $(SRCS)
 build: gen	
 	@echo
 	@echo "### BUILD ###"
-	$(MAKE) -C obj_dir -j $$(nproc) -f V$(TOP).mk
+	$(MAKE) -C $(OBJ_DIR) -j $$(nproc) -f V$(TOP).mk
 
 run: $(OBJ_DIR)
 	@echo

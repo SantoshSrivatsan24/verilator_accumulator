@@ -28,6 +28,7 @@ class Vaccumulator__Syms final : public VerilatedSyms {
     // MODULE INSTANCE STATE
     Vaccumulator___024root         TOP;
     Vaccumulator___024root         NEXT;
+    Vaccumulator___024root         PRDCT;
 
     // CONSTRUCTORS
     Vaccumulator__Syms(VerilatedContext* contextp, const char* namep, Vaccumulator* modelp);

@@ -9,9 +9,9 @@
 #include <Vaccumulator.h>
 #include <Vaccumulator__Syms.h>
 
-#define SIM_TIME 50
+#define SIM_TIME 1000000
 
-static uint64_t timestamp;
+uint64_t timestamp;
 
 ///////////////////////////////////////
 
@@ -79,7 +79,7 @@ void Accumulator::Impl::attach() {
     int in = 1;
     dut_->in = in;
     int out = dut_->out;
-    std::cout<<"In = "<<std::setw(3)<<in<<"\tAccumulate out = "<<std::setw(3)<<out<<std::endl;
+    // std::cout<<"In = "<<std::setw(3)<<in<<"\tAccumulate out = "<<std::setw(3)<<out<<std::endl;
 }
 
 void Accumulator::Impl::run() {
