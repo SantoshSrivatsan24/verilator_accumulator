@@ -5,11 +5,10 @@
 #include "accumulator.h"
 
 #include <verilated.h>
-#include <verilated_vcd_c.h>
 #include <Vaccumulator.h>
 #include <Vaccumulator__Syms.h>
 
-#define SIM_TIME 1000000
+#define SIM_TIME 20
 
 uint64_t timestamp;
 
@@ -31,7 +30,6 @@ public:
 
 private:
     Vaccumulator *dut_;
-    VerilatedVcdC *trace_;
 
     void eval();
     void step();
@@ -41,22 +39,15 @@ private:
 
 Accumulator::Impl::Impl()
     : dut_ (new Vaccumulator)
-    , trace_ (new VerilatedVcdC)
     {
-        Verilated::traceEverOn(true);
-        dut_->trace(trace_, 5);
-        trace_->open("trace.vcd");
     }
 
 Accumulator::Impl::~Impl() {
-    trace_->close();
-    delete trace_;
     delete dut_;
 }
 
 void Accumulator::Impl::eval() {
     dut_->eval();
-    trace_->dump(timestamp);
     timestamp++;
 }
 
@@ -113,18 +104,18 @@ void Accumulator::run() {
 
 ///////////////////////////////////////
 
-int main () {
+// int main () {
 
-    clock_t start, end;
-    start = clock();
-    Accumulator *accumulator = new Accumulator();
-    accumulator->run();
-    delete accumulator;
-    end = clock();
-    double time = double (end - start) / CLOCKS_PER_SEC;
-    std::cout<<"Time = "<<time<<std::setprecision(5)<<std::endl;
+//     clock_t start, end;
+//     start = clock();
+//     Accumulator *accumulator = new Accumulator();
+//     accumulator->run();
+//     delete accumulator;
+//     end = clock();
+//     double time = double (end - start) / CLOCKS_PER_SEC;
+//     std::cout<<"Time = "<<time<<std::setprecision(5)<<std::endl;
 
-    return 0;
-}
+//     return 0;
+// }
 
 ///////////////////////////////////////

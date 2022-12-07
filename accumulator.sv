@@ -13,6 +13,7 @@ always @(posedge clk) begin
         dff <= 8'b0;
     end else begin
         dff <= in + out;
+        $display ("Accumulate out = %d", dff);
     end
 end
 
